@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/plugins/fuzzy_join" >
+        <file>icon.png</file>
+    </qresource>
+</RCC>

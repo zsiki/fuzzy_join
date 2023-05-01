@@ -3,10 +3,16 @@
 Plugin for QGIS to join two tables on maximal fuzzy match.
 
 Using fuzzy join we can join tables on inexact match. It can be used to
-find matching records even spelling errors are present.
+find matching records even spelling errors are present. The result is a memory layer
+which has the geometry of the first layer (if there is any) and the attributes 
+from both layers plus the match rate.
 
 This plugin uses Damerau-Levenshtein edit distance, see
-https://en.wikipedia.org/wiki/Damerau-Levenshtein_distance
+https://en.wikipedia.org/wiki/Damerau-Levenshtein_distance. QGIS has a
+Levenshtein distance function which considers insert, delete and replace
+operations. Damerau-Levenshtein distance adds a fours operation the
+transposition when the order of the adjecent is wrong (e.g.
+hte -> the).
 
 ## Usage
 
@@ -43,7 +49,7 @@ Plugins Toolbar. Starting the plugin an dialog box apears on the screen.
 
 > If checked a left outer join will be created, all rows from the base table will be coppied to the result table even no matching record found in joined layer/table
 
-Pressing the **OK** buttom a new layer is added to the layer list, called
+Pressing the **OK** buttom a new memory layer is added to the layer list, called
 *FuzzyJoin*. The features of the layer inherit the geometry from the base layer
 and have attributes from both tables. The column names of the joined table are
 changed by adding *joined_* prefix to avoid duplicate column names.
@@ -52,7 +58,8 @@ An extra column is added called
 
 ## An example
 
-We have to tables both containing postal adresses (from Hungary).
+We have two small tables both containing postal adresses (from Hungary)
+with spalling mistakes.
 
 **Base table**
 
@@ -80,8 +87,8 @@ limit, case sensitive inner join, we get the following table:
 |  1 | Karcag utca 37.      |         1 | Karczag utca 35. | 0.875        |
 |  4 | Szalóki utca 24.     |         4 | Szaloky utca 24. | 0.875        |
 
-Fuzzy left outer joining the the two tables using txt and txt1 columns with
-85% limit, case sensitive inner join, we get the following table:
+Fuzzy joining the the two tables using txt and txt1 columns with
+85% limit, case sensitive left outer join, we get the following table:
 
 | id | txt                  | joined_id | joined_txt1      | joined_match |
 | -- | -------------------- | --------- | ---------------- | ------------ |
@@ -109,4 +116,3 @@ Fuzzy joining the the two tables using txt and txt1 columns with
 |  2 | Kunhegyes utca 2.    |         2 | KunHegyes u. 2   | 0.765        |
 |  3 | Derzsi utca 43       |         3 | Derzs utca 40.   | 0.786        |
 |  4 | Szalóki utca 24.     |         4 | Szaloky utca 24. | 0.875        |
-

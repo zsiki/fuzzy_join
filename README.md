@@ -10,8 +10,8 @@ from both layers plus the match rate.
 This plugin uses Damerau-Levenshtein edit distance, see
 https://en.wikipedia.org/wiki/Damerau-Levenshtein_distance. QGIS has a
 Levenshtein distance function which considers insert, delete and replace
-operations. Damerau-Levenshtein distance adds a fours operation the
-transposition when the order of the adjecent is wrong (e.g.
+operations. Damerau-Levenshtein distance adds a fourth operation the
+transposition when the order of the adjecent vharacters is wrong (e.g.
 hte -> the).
 
 ## Usage
